@@ -16,11 +16,15 @@ class Settings(BaseSettings):
     @field_validator("database_url")
     @classmethod
     def use_psycopg3(cls, value: str) -> str:
-        # Supabase e Heroku entregam "postgres://"; o SQLAlchemy precisa do driver explicito
-        for prefix in ("postgres://", "postgresql://"):
-            if value.startswith(prefix):
-                return "postgresql+psycopg://" + value[len(prefix) :]
-        return value
+        return normalize_database_url(value)
+
+
+def normalize_database_url(value: str) -> str:
+    # Supabase e Heroku entregam "postgres://"; o SQLAlchemy precisa do driver explicito
+    for prefix in ("postgres://", "postgresql://"):
+        if value.startswith(prefix):
+            return "postgresql+psycopg://" + value[len(prefix) :]
+    return value
 
 
 @lru_cache

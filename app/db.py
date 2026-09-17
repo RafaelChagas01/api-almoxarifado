@@ -4,7 +4,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import DeclarativeBase, Session, sessionmaker
 from sqlalchemy.pool import NullPool
 
-from app.config import get_settings
+from app.config import get_settings, normalize_database_url
 
 
 class Base(DeclarativeBase):
@@ -12,6 +12,7 @@ class Base(DeclarativeBase):
 
 
 def build_engine(url: str):
+    url = normalize_database_url(url)
     if url.startswith("sqlite"):
         return create_engine(url, connect_args={"check_same_thread": False})
     # pooler do Supabase em modo transacao nao aceita prepared statements

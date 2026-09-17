@@ -27,10 +27,10 @@ A API resolve isso com três regras:
 
 | | leitura | operador | admin |
 |---|:-:|:-:|:-:|
-| Consultar produtos, histórico e relatórios | ✓ | ✓ | ✓ |
-| Registrar entrada, saída e ajuste | | ✓ | ✓ |
-| Cadastrar e editar produtos | | | ✓ |
-| Gerenciar usuários e ver auditoria | | | ✓ |
+| Consultar produtos, histórico e relatórios | sim | sim | sim |
+| Registrar entrada, saída e ajuste | | sim | sim |
+| Cadastrar e editar produtos | | | sim |
+| Gerenciar usuários e ver auditoria | | | sim |
 
 ## Endpoints
 

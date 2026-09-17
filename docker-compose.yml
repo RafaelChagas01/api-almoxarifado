@@ -1,0 +1,27 @@
+services:
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: almoxarifado
+      POSTGRES_USER: almox
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?defina POSTGRES_PASSWORD no .env}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U almox -d almoxarifado"]
+      interval: 5s
+      retries: 10
+
+  api:
+    build: .
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://almox:${POSTGRES_PASSWORD}@db:5432/almoxarifado
+      JWT_SECRET: ${JWT_SECRET:?defina JWT_SECRET no .env}
+    ports:
+      - "8000:8000"
+
+volumes:
+  pgdata:
